@@ -1,0 +1,127 @@
+{% extends "_layout mobile.html" %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data" class = "sign_up">
+    <label>First Name</label>
+    <input name="first_name" class="typing">
+    <br>
+    <label>Last Name</label>
+    <input name="last_name" class="typing">
+    <br>
+    <label>Email</label>
+    <input id="email" name="email" type="email" class="typing">
+    <p id="message"></p>
+    <label>Password</label>
+    <input id="password" name="password" type="password" class="typing" minlength="5">
+    <button id="show-password" type="button" class="sign_up">Show</button>
+    <br>
+    <label>Date of Birth</label>
+    <input name="birthday" type="date" class="typing">
+    <br>
+    <label>Profile Picture</label>
+    <input type="file" name="image" class="sign_up_file">
+    <br>
+     <!-- Subject Selection -->
+     
+     <label>Select 5 Classes:</label>
+     <br>
+     {% for class in classes %}
+    <div class="custom-checkbox-container">
+        <input type="checkbox" name="classes" value="{{ class.id }}" id="class_{{ class.id }}" class="custom-checkbox-input">
+        <label for="class_{{ class.id }}" class="custom-checkbox-label">{{ class.class_name }}</label>
+    </div>
+{% endfor %}
+
+     <br>
+     <button class="sign_up">sign_up</button>
+</form>
+     
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    
+    let checkboxes = document.querySelectorAll('input[type="checkbox"][name="classes"]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            let selectedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="classes"]:checked').length;
+            if (selectedCheckboxes > 5) {
+                alert('You can only select 5 classes.');
+                checkbox.checked = false;
+            }
+        });
+    });
+
+    // This is the only form submission listener you need for checking class selection
+    document.querySelector('form.sign_up').addEventListener('submit', function(e) {
+        let selectedClasses = document.querySelectorAll('input[type="checkbox"][name="classes"]:checked').length;
+        if (selectedClasses < 3) {
+            alert('You must select at least 3 classes.');
+            e.preventDefault();  // Prevent form submission
+        }
+    });
+
+    // Setting the max date of birth to yesterday
+    let today = new Date();
+    let yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    let dd = String(yesterday.getDate()).padStart(2, '0');
+    let mm = String(yesterday.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = yesterday.getFullYear();
+    let maxDate = yyyy + '-' + mm + '-' + dd;
+    document.querySelector('input[name="birthday"]').setAttribute('max', maxDate);
+
+});
+
+
+let input = document.querySelector('#email');
+let message = document.querySelector('#message');
+
+input.addEventListener('input', checkUniqueEmail);
+
+async function checkUniqueEmail() {
+    let response = await fetch('checkemail?email=' + input.value);
+    let json = await response.json();
+    if (json.exists) {
+        message.style.color = 'red';
+        message.textContent = 'That email already exists.';
+    } else if (input.validationMessage) {
+        message.style.color = 'orange';
+        message.textContent = input.validationMessage;
+    } else if (input.value) {
+        message.style.color = 'green';
+        message.textContent = 'That email is available!';
+    } else {
+        message.textContent = '';
+    }
+}
+
+let password = document.querySelector('#password');
+let showButton = document.querySelector('#show-password');
+
+showButton.addEventListener('click', togglePassword);
+
+function togglePassword() {
+    if (password.type == 'password') {
+        password.type = 'text';
+        showButton.textContent = 'Hide';
+    } else {
+        password.type = 'password';
+        showButton.textContent = 'Show';
+    }
+}
+
+document.querySelector('select[name="classes"]').addEventListener('change', function() {
+    let selectedClasses = Array.from(this.selectedOptions).length;
+    if (selectedClasses > 5) {
+        alert('You can only select 5 classes.');
+        // Deselect the last selected option
+        this.selectedOptions[selectedClasses - 1].selected = false;
+    }
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="/static/chat.css">
+
+
+</head>
+<body>
+
+<div class="chat-container">
+    <!-- Button to toggle chat rooms for mobile -->
+    
+    
+    <div class="chat-sidebar">
+		{% for class_info in classes %}
+		<div class="chat-room" onclick="window.location.href='/chat/{{ class_info.class_name }}'">{{ class_info.class_name }}</div>
+		{% endfor %}
+	</div>
+	
+    <div class="chat-main">
+        <div class="topnav">
+            <button id="toggleRooms" class="toggle-rooms">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </button>
+            
+		    {% if current_class %}
+            <img src="/static/icons/{{ current_class.class_name }}.png" alt="{{ current_class.class_name }}" class="class-logo">
+            {% endif %}
+
+            <a href="/questify" class="material-icons logo">home</a>
+          </div>
+        
+        <div id="chatbox" class="chat-messages"></div>
+        <div class="chat-input">
+            <input id="message" type="text" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+<script>
+    var loggedInUserId = {{ user_id }};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+
+var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+socket.on('connect', function() {
+    // Do something on connect if needed
+});
+
+socket.on('message', function(data) {
+    console.log('Received message:', data.message, 'from:', data.username);
+    var chatbox = document.getElementById('chatbox');
+
+    var messageWrapper = document.createElement('div');
+    messageWrapper.className = "message-wrapper";
+
+    if (data.profile_pic && data.profile_pic !== "NULL" && data.profile_pic !== "") {
+        var profileImg = document.createElement('img');
+        profileImg.src = "/" + data.profile_pic;
+        profileImg.alt = data.username;
+        profileImg.className = "profile-pic";
+        messageWrapper.appendChild(profileImg);
+}
+
+
+    var usernameDiv = document.createElement('div');
+    usernameDiv.textContent = data.username;
+    usernameDiv.className = "username";
+    messageWrapper.appendChild(usernameDiv);
+
+    var messageDiv = document.createElement('div');
+    messageDiv.textContent = data.message;
+    messageDiv.className = "message-text";
+    messageWrapper.appendChild(messageDiv);
+
+    chatbox.appendChild(messageWrapper);
+});
+
+
+
+
+var currentRoom = null;
+
+function joinRoom(roomName) {
+    currentRoom = roomName;
+    
+    // Clear the chatbox when joining a new room
+    var chatbox = document.getElementById('chatbox');
+    chatbox.innerHTML = '';
+
+    socket.emit('join', { room: roomName });
+    const classImage = document.querySelector('.class-logo');
+    classImage.src = "/static/icons/" + roomName + ".png";
+    classImage.alt = roomName;
+
+}
+
+
+function joinSelectedRoom() {
+    var roomName = document.getElementById("roomSelect").value;
+    socket.emit('join', {room: roomName});
+}
+
+function sendMessage() {
+    if (!currentRoom) {
+        alert('Please join a room first!');
+        return;
+    }
+    var input = document.getElementById('message');
+    console.log('Sending message:', input.value, 'to room:', currentRoom);  // Debug line
+    socket.emit('send_message', {room: currentRoom, message: input.value, user_id: loggedInUserId});
+    input.value = '';
+}
+// Handle the toggle button for chat rooms
+document.getElementById('toggleRooms').addEventListener('click', function() {
+    const chatContainer = document.querySelector('.chat-container');
+    const chatSidebar = document.querySelector('.chat-sidebar');
+    if (chatContainer.classList.contains('show-rooms')) {
+        chatContainer.classList.remove('show-rooms');
+        chatSidebar.style.display = 'none';
+    } else {
+        chatContainer.classList.add('show-rooms');
+        chatSidebar.style.display = 'block';
+    }
+});
+
+
+</script>
+<script>
+    // This will extract the last part of the URL (after the last '/')
+    const roomNameFromUrl = window.location.pathname.split('/').pop();
+    
+    // If the last part of the URL is not 'chat', then it's a room name, so join that room
+    if (roomNameFromUrl !== 'chat') {
+        joinRoom(roomNameFromUrl);
+    }
+</script>
+
+
+</body>
+</html>

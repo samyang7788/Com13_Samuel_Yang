@@ -1,0 +1,190 @@
+{% extends "_layout mobile.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% if class_name %}
+  <div class="center" style="width: 134px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #B9B9B9;
+text-align: center;
+font-family: Lexend;
+font-size: 16px;
+font-style: Lucida Console;
+font-weight: 400;
+line-height: 20px; /* 125% */
+letter-spacing: -0.5px;">Your Class </div>
+  <div class="center" style="width: 134px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--Color, #FFF);
+text-align: center;
+font-family: Lucida Console;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 100% */
+letter-spacing: -0.5px;">{{ class_name }}</div>
+{% else %}
+  <h1>All Posts</h1>
+{% endif %}
+{% if class_name %}
+  <img src="/static/icons/{{ class_name }}.png" alt="classes"  class = "icon_background">
+{% endif %}
+ 
+<div id="popup1" class="overlay">
+    <div class="popup">
+ 
+        <a class="close" href="#">&times;</a>            
+            <!-- Change the form action to /post/add -->
+            <form action="/post/add" method="POST" enctype="multipart/form-data">
+                <label for="class_id" class="popup_text">Choose your class</label>
+                <div class="hex-select">
+                    <select id="example" name="class_id" required >
+                        {% for class in classes %}
+                            <option value="{{ class.id }}" {% if class.id == class_id %}selected{% endif %}>{{ class.class_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- ... (rest of your form fields) -->
+				<h1>Upload your image
+					<small>with preview</small>
+				</h1>
+				<div class="avatar-upload">
+					<div class="avatar-edit">
+						<input type="file" id="imageUpload" name="image" accept=".png, .jpg, .jpeg" />
+
+
+
+						<label for="imageUpload"></label>
+					</div>
+					<div class="avatar-preview">
+						<div id="imagePreview" style="background-image: url(https://assets.pokemon.com/assets/cms2/img/watch-pokemon-tv/seasons/season01/season01_ep01_ss01.jpg);">
+						</div>
+					</div>
+				</div>
+                <label for="content" class="popup_text">Write your content</label>
+                <textarea name="content" class="styled-input" required></textarea>
+                <input type="submit" value="Post" class="post_button">
+            </form>
+    </div>
+</div>
+<div class="flex-container">
+    <a>Schedule</a>
+    <a href="#popup1" id="middle">Post</a>
+    <a href="/chat">Message</a>  
+  </div>
+
+    
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            {% for post in posts %}
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <div class="profile-pic"><img src="img/cover 1.png" alt=""></div>
+                        <p class="username">{{ post['user_name'] }}</p>
+                    </div>
+                    <img src="/img/option.PNG" class="options" alt="">
+                </div>
+                
+                
+                <img src="/{{ post['image'] or  'static/images/default.png' }}" alt="profile" class="post-image">
+                <div class="post-content">
+                  <!-- Existing form for liking a post -->
+                <form action="/add_like/{{ post.id }}" method="post" id="like-form-{{ post.id }}">
+                  <button type="button" class="heart-icon {{ 'liked' if post['liked_by_user'] else 'unliked' }}" data-form-id="like-form-{{ post.id }}">
+
+                    <i class="fa fa-heart"></i>
+                </button>
+                
+                </form>
+
+                    <span class="like-count"> {{ post['likes_count'] }} likes</span>                  
+                    
+
+
+
+
+                    <p class="description"><span>{{ post['user_name'] }}</span> {{ post['content'] | safe }}</p>
+                    <div class ="comments">
+                      <!--{% for comment in post.comments %}-->
+                          <p style=" 
+                          font-size: 14px;
+                          line-height: 20px;"
+                          ><span>{{ comment.first_name }} {{ comment.last_name }}</span>: {{ comment.content }}</p>
+
+                      <!--{% endfor %}-->
+                      <!-- Adding Comment Form -->
+                      <a href="#" class="read-more">Read more</a>
+                  </div>
+                    <!-- ... other post details ... -->
+                    <span class="time-since-posted post-time"> {{ post['time_since_posted'] }}</span>
+                    <!-- ... rest of your post rendering ... -->
+                                
+
+                    
+                    <form action="/add_comment/{{ post.id }}" method="post" class="comment-box">
+                        <input type="text" name="content" placeholder="Add a comment..." class="add_comment">
+                        <button type="submit" class="comment-btn">Comment</button>
+                    </form>
+
+                    <!-- Adding Comments -->
+
+                    <!-- Inside your HTML, for each post -->
+                
+                    
+                </div>
+            </div>
+            {% endfor %}
+            // +5 more post elements
+        </div>
+    </div>
+    <div id="grid"></div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all heart icons on the page
+    const hearts = document.querySelectorAll('.heart-icon');
+    
+    hearts.forEach(heart => {
+        heart.addEventListener('click', function() {
+            // Toggle classes on click
+            if (this.classList.contains('unliked')) {
+                this.classList.remove('unliked');
+                this.classList.add('liked');
+            } else {
+                this.classList.remove('liked');
+                this.classList.add('unliked');
+            }
+
+            // Submit the associated form to update the like in the backend
+            const formId = this.getAttribute('data-form-id');
+            document.getElementById(formId).submit();
+        });
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const readMoreLinks = document.querySelectorAll('.read-more');
+
+    readMoreLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const commentsDiv = this.parentElement;
+            if (commentsDiv.classList.contains('expanded')) {
+                commentsDiv.classList.remove('expanded');
+                this.textContent = 'Read more';
+            } else {
+                commentsDiv.classList.add('expanded');
+                this.textContent = 'Read less';
+            }
+        });
+    });
+});
+
+</script>
+
+
+
+{% endblock %}

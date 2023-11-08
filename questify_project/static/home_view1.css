@@ -1,0 +1,1380 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: #000000;
+    
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+/* NAVBAR STYLING STARTS */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 20px 0px 20px;
+  color: #fff;
+}
+
+.nav-links a {
+  color: #fff;
+}
+
+/* LOGO */
+.logo {
+  font-size: 32px;
+
+}
+
+/* NAVBAR MENU */
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+  z-index:3;
+}
+
+.menu li:hover {
+  background-color: #363636;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.menu li {
+  padding: 5px 14px;
+}
+
+/* DROPDOWN MENU */
+.services {
+  position: relative; 
+}
+
+.dropdown {
+  background-color: #363636;
+  padding: 1em 0;
+  position: absolute; /*WITH RESPECT TO PARENT*/
+  display: none;
+  border-radius: 8px;
+  top: 35px;
+}
+
+.dropdown li + li {
+  margin-top: 10px;
+}
+
+.dropdown li {
+  padding: 0.5em 1em;
+  width: 8em;
+  text-align: center;
+}
+
+.dropdown li:hover {
+  background-color: #363636;
+}
+
+.services:hover .dropdown {
+  display: block;
+}
+
+
+
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+/*popup*/
+
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: 50px auto;
+}
+
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  top: 10px;
+}
+
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+
+.avatar-upload .avatar-edit input + label {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
+  border-radius: 30%;
+  background: #FFFFFF;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all .2s ease-in-out;
+}
+
+.avatar-upload .avatar-edit input + label:hover {
+  background: #f1f1f1;
+  border-color: #d6d6d6;
+}
+
+.avatar-upload .avatar-edit input + label:after {
+  content: "\f040";
+  font-family: 'FontAwesome';
+  color: #757575;
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: auto;
+}
+
+.avatar-upload .avatar-preview {
+  width: 192px;
+  height: 192px;
+  position: relative;
+  border-radius: 30%;
+  border: 6px solid #F8F8F8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-upload .avatar-preview > div {
+  width: 100%;
+  height: 100%;
+  border-radius: 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.popup {
+  margin: 1rem auto;
+  padding: 20px;
+  background: #1f1f1f;
+  border-radius: 5px;
+  position: relative;
+  max-height: 90vh;  /* This will make the popup's height relative to the viewport height */
+  overflow-y: auto;  /* Enable scrolling inside the popup if content overflows */
+}
+
+/* This media query targets smaller screens */
+@media (max-width: 480px) {
+  .popup {
+    padding: 10px; /* Reduce padding on smaller screens */
+    /* Add any other styles specific to smaller screens here */
+  }
+}
+
+.popup h1 {
+  font-size: 20px;
+  text-align: center;
+  margin: 1rem 0 0;
+
+}
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+.popup_text {
+  font-size: 17px;
+  text-align: center;
+  margin: 1em 0 0;
+
+}
+.hex-select {
+  position: relative;
+  padding: .75rem 0;
+  cursor: pointer;
+  
+  
+}
+
+.hex-select:after {
+  top: 50%;
+  right: 0.5rem; 
+  content: '';
+  width: .35rem;
+  height: .35rem;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-75%) rotate(45deg);
+  border-right: .125rem solid #ddd;
+  border-bottom: .125rem solid #ddd;
+}
+
+.hex-select select, 
+.hex-select .custom-select { 
+  padding-right: 2rem;
+  position: relative;
+  appearance: none;
+  background: #37373782;
+  color: #ddd;
+  font-family: inherit;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  outline: none;
+  padding: 0 1.5rem;
+  transition: all .35s ease-in-out;
+  width: 100%;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  border: 1px solid #222;
+  border-radius: .35rem;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hex-select option {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: #1f1f1fb2;
+  border: 1px solid #444;
+  border-radius: .35rem;
+  list-style: none;
+  padding: 0;
+  margin: .75rem 0;
+  transform: translateY(1rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  max-height: 250px;
+  overflow-y: auto;
+  transition: .35s ease-in-out all;
+}
+
+.hex-select option li {
+  height: 3rem;
+  line-height: 3rem;
+  outline: none;
+  padding: 0 1.5rem;
+  text-transform: none;
+  letter-spacing: .025rem;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: .35s ease-in-out all;
+}
+
+.hex-select option li:hover {
+  background: #444;
+}
+
+.hex-select:hover select, 
+.hex-select:hover .custom-select {
+  border-color: #444;
+}
+
+.hex-select:hover option {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+/* Common styles that apply to both select and textarea */
+.styled-input {
+  appearance: none;
+  background: #37373782;
+  color: #ddd;
+  font-family: inherit;
+  outline: none;
+  padding: 0.75rem 1.5rem;
+  transition: all .35s ease-in-out;
+  width: 100%;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  border: 1px solid #222;
+  border-radius: .35rem;
+  cursor: pointer;
+}
+
+.styled-input:hover {
+  border-color: #444;
+}
+
+/* Textarea specific styles */
+textarea.styled-input {
+  height: 100px; /* or any height you prefer */
+  text-transform: none; /* reset the uppercase for better text readability */
+  resize: vertical; /* allow vertical resize */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Optional: Limit the vertical resize to a certain height */
+textarea.styled-input {
+  max-height: 300px;
+  min-height: 100px;
+}
+.post_button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  appearance: none;
+  background: #37373782;
+  color: #ddd;
+  font-family: inherit;
+  height: 3rem;
+  line-height: 3rem;
+  outline: none;
+  padding: 0 1.5rem;
+  transition: all .35s ease-in-out;
+  width: 100%;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  border: 1px solid #222;
+  border-radius: .35rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  border: 1px solid #454545;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+/*popup end*/
+/* RESPONSIVE NAVBAR MENU STARTS */
+
+/* CHECKBOX HACK */
+
+input#checkbox_toggle {
+  display: none;
+} 
+
+/* HAMBURGER MENU */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  user-select: none;
+}
+
+/* APPLYING MEDIA QUERIES */
+@media (max-width: 768px) {
+ .menu {
+    display:none;
+    position: absolute;
+    background: #333;
+    right: 0;
+    left: 0;
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  .menu li:hover {
+    display: inline-block;
+    background: #333;
+    transition: 0.3s ease;
+  }
+
+  .menu li + li {
+    margin-top: 12px;
+  }
+
+  input[type=checkbox]:checked ~ .menu {
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .dropdown {
+    left: 50%;
+    top: 30px;
+    transform: translateX(35%);
+  }
+
+  .dropdown li:hover {
+    background: #333;
+  }
+}
+  
+.center {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 60%;
+  }
+.class_icon {
+  display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mid-container {
+  padding-top: 10rem;
+  padding-bottom: 50%;
+}
+
+.button-12 {
+  margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px ;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    font-size: 25px;
+    border-radius: 8px;
+    border: none;
+    height: 60px;
+    background: #6E6D70;
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+    color: #DFDEDF;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-12:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+  }
+ 
+
+  /* end demo only */
+  .mobile-bottom-nav {
+    position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  will-change: transform;
+  transform: translateZ(0);
+  display: flex;
+  height: 65px;
+  box-shadow: 0 -2px 5px -2px #333;
+  background-color: #363636;
+    border-radius: 20px 20px 5px 5px;
+  }
+  .mobile-bottom-nav__item {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mobile-bottom-nav__item a:visited {
+    text-decoration: none;
+    color: white;
+  }
+  .mobile-bottom-nav__item a:active {
+    text-decoration: none;
+    color: rgb(92, 149, 255);
+  }
+
+  .mobile-bottom-nav__item--active {
+    color: rgb(92, 149, 255);
+  }
+  .mobile-bottom-nav__item--visited  {
+    
+  }
+  .mobile-bottom-nav__item-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+/* Add a "checked" mark when clicked on */
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  
+  color: white;
+}
+
+/* Style the header */
+.header {
+  
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+.icon_background {
+  position: fixed;
+  /* bottom: 0; */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  z-index: -1;
+  will-change: transform;
+  transform: translateZ(0);
+  display: block;
+    margin-right: auto;
+    margin-left: auto;
+  /* display: flex; */
+  /* height: 65px; */
+  width: 100%;
+  /* box-shadow: 0 -2px 5px -2px #333; */
+  /* background-color: #363636; */
+  /* border-radius: 20px 20px 5px 5px; */
+
+}
+/* post start here */
+.post{
+  width: 90%;
+  height: auto;
+  background-color: #3333337a;
+  border: 1px solid rgb(0, 0, 0);
+  margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 15px;
+}
+.heart-icon {
+  font-size: 20px;  /* Example size */
+  cursor: pointer;
+}
+
+.heart-icon.liked {
+  color: red !important;
+  background: transparent;
+  border: none;
+}
+
+.heart-icon.unliked {
+  color: grey;
+  background: transparent;
+  border: none;
+}
+
+
+.info{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.info .username{
+  width: auto;
+  font-weight: bold;
+  color: #f5f5f5;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.info .options{
+  height: 10px;
+  cursor: pointer;
+}
+
+.info .user{
+  display: flex;
+  align-items: center;
+}
+
+.info .profile-pic{
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  background: none;
+}
+
+.info .profile-pic img{
+  border: none;
+}
+
+.post-image{
+  width: 85%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 5px;
+}
+
+.post-content{
+  width: 100%;
+  padding: 20px;
+}
+
+.networks {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+	text-align: center;
+}
+
+.networks-outer {
+  display: table;
+  position: relative;
+  width: 2em;
+  height: 2em;
+  border: 2px solid white;
+  border-radius: 4em;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.networks-outer a {
+  display: table-cell;
+  vertical-align: middle;
+  color: white;
+}
+
+.fa:before {
+  font-size: 15px;
+}
+
+.networks:hover .networks-outer {
+  background: rgba(255,255,255,.5);
+  cursor: pointer;
+}
+
+/**** Social-Network-Specific ****/
+
+.networks:hover .fa-heart {
+  color: rgb(196, 28, 28);
+}
+
+#heart.networks-outer:hover {
+  border-color: rgb(219, 55, 55);
+}
+
+.description{
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.description span{
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.post-time{
+  color: rgba(243, 238, 238, 0.5);
+  font-size: 12px;
+}
+
+.comment-wrapper{
+  width: 100%;
+  height: 50px;
+  border-radius: 1px solid #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-wrapper .icon{
+  height: 30px;
+}
+.add_comment{
+  height: 30px;
+  background-color: rgb(0 0 0 / 0%);
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 300;
+  border: none;
+  color: white;
+}
+.comment-box{
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: none;
+}
+
+.comment-btn,
+.action-btn{
+  background: none;
+  border: none;
+  outline: none;
+  text-transform: capitalize;
+  font-size: 12px;
+  color: rgb(0, 162, 255);
+  opacity: 0.5;
+
+}
+div.comments {
+  white-space: nowrap; 
+  height: 20px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;  /* make it relative to position the read more button */
+}
+
+div.comments.expanded {
+  white-space: normal;
+  height: auto;
+  overflow: visible;
+}
+
+.read-more {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: transparent;  /* or any background to cover the ellipsis when expanded */
+  padding-left: 5px;  /* some padding to make it look good */
+  color: #6E6D70;
+  font-size: 15px;
+}
+
+
+.reaction-wrapper{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  margin-top: -20px;
+  align-items: center;
+}
+
+.reaction-wrapper .icon{
+  height: 25px;
+  margin: 0;
+  margin-right: 20px;
+}
+
+.reaction-wrapper .icon.save{
+  margin-left: auto;
+}
+#grid {
+  display: grid;
+  height: 200px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 20px 5px;
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50%;
+}
+
+.flex-container > a {
+  background-color: #000000;
+  width: 100px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 15px;
+  border-radius: 10px;
+  background-color: #3333337a;
+  padding: 6px 0px 6px;
+  color: white;
+}
+a#middle {
+  margin: 0px 20px 0px;
+}
+
+/*slidehow for homepage*/
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+.slidehow_img {width: 100%; aspect-ratio : 3 / 1; object-fit: cover;border-radius: 12px; background: linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(<path-to-image>), lightgray 0px -248.345px / 100% 402.21% no-repeat;
+	  filter: blur(1.5px);
+}
+/*end of slidehow for homepage*/
+.container img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+/*horizontal scrolling strip
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+*/
+.container {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  width: 100vw;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+  background-color: #000000;
+}
+
+.item {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+} 
+.class_text {
+  color: white;
+  margin-left: 20px;
+}
+
+/* Style the form to align the elements in a row */
+.add-todo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0 0.5rem; /* Add some margin to the top and bottom */
+}
+
+/* Style the input field */
+#newTodo {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #2b2b2b;
+  border-radius: 4px;
+  background-color: #000000;
+  width: 40%;
+  box-sizing: border-box;
+  color: #ffffff;
+}
+
+/* Style the dropdown/select */
+#todoClass {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #252525;
+  border-radius: 4px;
+  background-color: #000000;
+  width: 30%;
+  box-sizing: border-box;
+  color: #c9c9c9;
+}
+
+/* Style the button */
+.add-todo button {
+  padding: 10px 25px;
+  border: 1px solid #252525;
+  border-radius: 4px;
+  background-color: #000000;
+  color: #8f8f8f;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-todo button:hover {
+  background-color: #1a1a1a; /* Slightly darker gray on hover */
+}
+
+.todo-class {
+  color: #ffffff;
+}
+/* Style for the todo container */
+.todo-container {
+  background-color: #2d2d2d;
+  padding: 10px;
+  margin: 0.25rem 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  outline-color: white;
+}
+
+/* Hide the default checkbox */
+.todo-checkbox {
+  display: none;
+}
+.todo-container.todo-completed .todo-text {
+  color: grey;
+}
+
+
+/* Custom checkbox styling */
+.custom-checkbox span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  margin-right: 10px;
+  position: relative;
+}
+
+/*style for todo start here */
+/* Style for the custom checkbox when checked */
+.todo-checkbox:checked + span {
+  background-color: rgb(80, 80, 80);
+  border-color: rgb(80, 80, 80);
+}
+
+.todo-checkbox:checked + span:after {
+  content: '\2714';  /* Unicode checkmark */
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Remove blue outline from clicked/tapped elements */
+*:focus {
+  outline: none;
+}
+
+/* Todo text styling */
+.todo-text {
+  flex-grow: 1;  /* Make it take up available space */
+}
+
+/* Todo class styling */
+.todo-class {
+  color: #aaa;
+}
+
+
+/*login page*/
+.background{
+  width: 430px;
+  height: 520px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 50%;
+}
+
+.shape:first-child{
+  background: linear-gradient(
+      #1845ad,
+      #23a2f6
+  );
+  left: -80px;
+  top: -80px;
+}
+.shape:last-child{
+  background: linear-gradient(
+      to right,
+      #ff512f,
+      #f09819
+  );
+  right: -30px;
+  bottom: -80px;
+}
+form.sign_up{
+  
+  width: 95%;
+  background-color: rgba(255,255,255,0.13);
+  /* position: absolute; */
+  /* transform: translate(-50%,-50%); */
+  /* top: 40%; */
+  /* left: 50%; */
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  padding: 50px 35px;
+  /* margin-top: 70%; */
+  margin: auto;
+  margin-bottom: 6rem;
+  /* padding-bottom: 100px; */
+
+}
+form.sign_up *{
+  font-family: 'Poppins',sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+/* Hide default checkbox */
+.custom-checkbox-input {
+  display: none;
+}
+
+/* Style the custom checkbox container */
+.custom-checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Custom checkbox */
+.custom-checkbox-label {
+  position: relative;
+  padding-left: 30px; /* Make space for the custom checkbox */
+  cursor: pointer;
+}
+
+.custom-checkbox-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6C5B7B; 
+  border-radius: 4px;
+  background: #fff;
+  transition: background 0.2s;
+}
+
+/* Checkmark */
+.custom-checkbox-label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Checkbox checked state */
+.custom-checkbox-input:checked + .custom-checkbox-label::before {
+  background: #6C5B7B;
+}
+
+.custom-checkbox-input:checked + .custom-checkbox-label::after {
+  opacity: 1;
+}
+
+
+form h3{
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+}
+button.sign_up {
+
+  margin-top: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.067);
+  color: #ffffff;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+.sign_up_file{
+margin: 10px;
+width: 100%;
+
+color: #ffffff;
+padding: 15px 0;
+font-size: 18px;
+
+border-radius: 5px;
+cursor: pointer;
+}
+label{
+  display: block;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+.typing{
+  display: block;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+::placeholder{
+  color: #e5e5e5;
+}
+button{
+
+    /* width: 100%; */
+    /* background-color: #ffffff; */
+    /* color: #080710; */
+    /* font-size: 18px; */
+    /* font-weight: 600; */
+    /* border-radius: 5px; */
+    /* cursor: pointer; */
+}

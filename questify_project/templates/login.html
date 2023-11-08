@@ -1,0 +1,33 @@
+{% extends "_layout mobile.html" %}
+
+{% block content %}
+
+<form method="POST" class = "sign_up">
+    <label>Email</label>
+    <input name="email" type="email" id="username" class="typing">
+    <br>
+    <label>Password</label>
+    <input id="password" name="password" type="password" class="typing">
+    <button id="show-password" type="button" class="sign_up">Show</button>
+    <br>
+    <button class="sign_up">Login</button>
+</form>
+
+<script>
+let password = document.querySelector('#password');
+let showButton = document.querySelector('#show-password');
+
+showButton.addEventListener('click', togglePassword);
+
+function togglePassword() {
+    if (password.type == 'password') {
+        password.type = 'text';
+        showButton.textContent = 'Hide';
+    } else {
+        password.type = 'password';
+        showButton.textContent = 'Show';
+    }
+}
+</script>
+
+{% endblock %}

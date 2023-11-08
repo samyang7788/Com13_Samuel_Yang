@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>User Management</title>
+        <link rel="stylesheet" href="/static/going_in.css">
+    </head>
+    <body>
+        <img src="/static/icons/questiy_home_no_background1.png" alt="Paris" class="center">
+        <div class="button-container">  <!-- Button container added -->
+            {% if session["logged_in"] %}
+                Welcome, {{ session["first_name"] }}!
+                <a href="/logout">
+                    <button  class="custom-button" >logout</button>
+                </a>
+            {% else %}
+                <a href="/signup">
+                <button  class="custom-button" >Sign up</button>
+                </a>
+                <a href="/login">
+                    <button  class="custom-button" >Login</button>
+                </a>
+            {% endif %}
+        </div>
+        {% for message in get_flashed_messages() %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

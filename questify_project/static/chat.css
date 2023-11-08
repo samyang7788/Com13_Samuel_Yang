@@ -1,0 +1,173 @@
+body, html {
+    height: 100%; /* Ensures the body and html elements take full viewport height */
+}
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif; /* Optional: to ensure consistent font rendering */
+}
+
+.chat-container {
+    display: flex;
+    height: 100%; /* Adjust the height to be 100% instead of 100vh to avoid potential issues with mobile browsers and address bars */
+    border: 1px solid #ccc;
+}
+
+
+
+
+.chat-sidebar {
+    flex: 1;
+    background-color: #2c2f33;
+    color: white;
+    overflow-y: auto;
+    display: none;  /* hidden by default */
+}
+  
+  .chat-room {
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #4a4d52;
+  }
+  
+  .chat-room:hover {
+    background-color: #3a3d41;
+  }
+  
+  .chat-main {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    background-color: #201e1e;
+    height: 100%; /* Ensure chat-main takes the full height of its parent */
+}
+
+  
+.chat-messages {
+    flex: 1;  
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 5px;
+    height: calc(100% - 50px); /* Adjusted height to account for chat-input height */
+}
+.message-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+  color: white;
+}
+
+.message-text {
+  flex: 1;
+  color: white;
+}
+
+  
+  .chat-input {
+    border-top: 1px solid #4a4d52;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .chat-input button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #7289da;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .chat-input button:hover {
+    background-color: #5b6eae;
+  }
+  
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .chat-sidebar {
+        flex: 0 0 70vw;  /* 70% of viewport width for mobile */
+    }
+    .toggle-rooms {
+        display: block;  /* show the toggle button on mobile */
+    }
+    .chat-container.show-rooms .chat-sidebar {
+        display: block;  /* show the chat rooms when .show-rooms is present */
+    }
+    .chat-main {
+        flex: 1;  /* On mobile, when sidebar is hidden, chat-main takes full width */
+    }
+}
+.topnav {
+  background-color: #333;
+  display: flex;                 /* Use flexbox */
+  align-items: center;          /* Align items vertically in the center */
+  justify-content: space-between; /* Space items evenly: hamburger left, image center, icon right */
+}
+
+.topnav > a, .topnav > button, .topnav > img {
+  text-align: center; /* Centers the content */
+}
+
+.toggle-rooms {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  width: 35px;
+  padding: 0;
+  margin: 1rem;
+}
+
+.line {
+  width: 100%;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 2px;
+}
+
+.toggle-rooms:focus {
+  outline: none;
+}
+
+a.material-icons.logo {
+  font-size: 32px;
+  text-align: right;  /* Align the person icon to the right within its flex item */
+  padding-right: 1rem; /* Some spacing to the right */
+  color: white;
+}
+
+
+.class-logo {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  object-fit: cover;
+}
+

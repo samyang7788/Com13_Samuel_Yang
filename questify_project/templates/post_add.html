@@ -1,0 +1,41 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<form action="/post/add" method="POST" enctype="multipart/form-data">
+    <label for="class_id">Class:</label>
+    <select name="class_id" required>
+        {% for class in classes %}
+            <option value="{{ class.id }}">{{ class.class_name }}</option>
+        {% endfor %}
+    </select>
+    <label for="content">Content:</label>
+    <textarea name="content" required></textarea>
+    <label for="image">Image:</label>
+    <input type="file" name="image" accept="image/*">
+    <input type="submit" value="Post">
+</form>
+<script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        extraPlugins: [
+            function(editor) {
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new class {
+                    constructor(loader) {
+                        this.loader = loader;
+                    }
+                    async upload() {
+                        let file = await this.loader.file;
+                        let formData = new FormData();
+                        formData.append('image', file);
+                        let response = await fetch('/save-image', {
+                            method: 'post',
+                            body: formData,
+                        });
+                        return response.json();
+                    }
+                }(loader);
+            }
+        ]
+    });
+        </script>
+{% endblock %}

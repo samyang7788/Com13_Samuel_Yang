@@ -1,0 +1,192 @@
+{% extends "_layout mobile.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for message in messages %}
+        <div class="alert alert-warning">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="center"style="width: 80%; " >
+<div class="slideshow-container" >
+
+	<div class="mySlides fade">
+	  <div class="numbertext">1 / 3</div>
+	  <img src="static/icons/q_poster.png"  class="slidehow_img">
+	  <div class="text">Caption Text</div>
+	</div>
+	
+	<div class="mySlides fade">
+	  <div class="numbertext">2 / 3</div>
+	  <img src="static/icons/questiy_home_no_background1.png" class="slidehow_img">
+	  <div class="text">Caption Two</div>
+	</div>
+	
+	<div class="mySlides fade">
+	  <div class="numbertext">3 / 3</div>
+	  <img src="/static/icons/q_poster.png" class="slidehow_img">
+	  <div class="text">Caption Three</div>
+	</div>
+	
+	<a class="prev" onclick="plusSlides(-1)">❮</a>
+	<a class="next" onclick="plusSlides(1)">❯</a>
+	
+	</div>
+	<br>
+	
+	<div style="text-align:center">
+	  <span class="dot" onclick="currentSlide(1)"></span> 
+	  <span class="dot" onclick="currentSlide(2)"></span> 
+	  <span class="dot" onclick="currentSlide(3)"></span> 
+	</div>
+	</div>
+
+	<h2 style="margin-left: 20px; font-size: 20px;">Classes</h2>
+	<div class="container">
+		{% for class in classes %}
+			<div class="item">
+				<a href="{{ url_for('class_posts', class_id=class.id) }}">
+					<img src="/static/icons/{{ class.class_name }}.png">
+					<div class="class_text">{{ class.class_name }}</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+	
+
+	<h2 style="margin: 20px 20px 0px; font-size: 20px;">Todo list</h2>
+<!-- Form for adding a todo -->
+<form action="/add_todo" method="post" class="add-todo">
+  <input type="text" name="text" placeholder="Add a new task..." id="newTodo">
+
+  <!-- Dropdown for class selection -->
+  <select name="class_id" id="todoClass">
+      {% for class_info in classes %}
+          <option value="{{ class_info.id }}">{{ class_info.class_name }}</option>
+      {% endfor %}
+  </select>
+
+  <button type="submit">Add</button>
+</form>
+<div style="width: 100%; height: 1rem; background: linear-gradient(#434343, black);
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);"></div>
+<ul id="todoList">
+	{% for todo in todos %}
+		<li class="todo-container {% if todo.is_complete %}todo-completed{% endif %}">
+			<label class="custom-checkbox">
+				<input type="checkbox" class="todo-checkbox" data-todoid="{{ todo.id }}" {% if todo.is_complete %}checked{% endif %}>
+				<span></span>  <!-- Custom checkbox -->
+			</label>
+			<span class="todo-text">{{ todo.task_description }}</span>
+			<span class="todo-class">[{{ todo.class_name or "No Class" }}]</span>
+		</li>
+	{% endfor %}
+  </ul>
+  
+
+
+		  
+		  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		
+		let slideIndex = 0;
+		showSlides();
+		
+	function showSlides() {
+		  let i;
+		  let slides = document.getElementsByClassName("mySlides");
+		  let dots = document.getElementsByClassName("dot");
+		  for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none";  
+		  }
+		  slideIndex++;
+		  if (slideIndex > slides.length) {slideIndex = 1}    
+		  for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" active", "");
+		  }
+		  slides[slideIndex-1].style.display = "block";  
+		  dots[slideIndex-1].className += " active";
+		  setTimeout(showSlides, 2000); // Change image every 2 seconds
+		}
+		// todo list
+    function changeStatus(todo_id, new_status) {
+    console.log("changeStatus function called"); // Add this line
+    // ... rest of your code
+}
+
+	function showSection(id) {
+		var sections = document.getElementsByClassName('section');
+		for (var i = 0; i < sections.length; i++) {
+			sections[i].classList.remove('active');
+		}
+		document.getElementById(id).classList.add('active');
+		}
+	function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+	document.addEventListener('DOMContentLoaded', function() {
+    var checkboxes = document.querySelectorAll('.todo-checkbox');
+
+    checkboxes.forEach(function(checkbox) {
+        console.log("Checkbox data-todoid:", checkbox.getAttribute('data-todoid'));  // Add this line
+
+        checkbox.addEventListener('change', function() {
+            var todoId = this.getAttribute('data-todoid');
+            if (!todoId) {
+                console.error('Todo ID is missing or invalid:', todoId);
+                return;  // Stop further execution if todoId is invalid
+            }
+
+            var isComplete = this.checked ? 1 : 0;
+            console.log('Updating todo with ID:', todoId, 'to status:', isComplete);
+
+            // Use fetch to send the update to the server
+            fetch('/update_todo_status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    todo_id: todoId,
+                    is_complete: isComplete
+                })
+            });
+
+            var li = this.closest('li');
+            // Toggle the completed class based on checked state
+            if (this.checked) {
+                li.classList.add('todo-completed');
+            } else {
+                li.classList.remove('todo-completed');
+            }
+
+            // Move the todo based on its checked state
+            if (this.checked) {
+                // Move to bottom
+                li.parentElement.appendChild(li);
+            } else {
+                // Move to top
+                li.parentElement.insertBefore(li, li.parentElement.firstChild);
+            }
+        });
+    });
+});
+
+
+
+
+
+		</script>
+	  {% endblock %}
+

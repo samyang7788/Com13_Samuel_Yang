@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="/static/home_view1.css">
+
+
+</head>
+<body>
+
+<!-- Simulate a smartphone / tablet -->
+
+
+
+	  <nav class="navbar">
+		<!-- LOGO -->
+		
+		<a class="material-icons logo">person</a>
+		<img src="/static/icons/questify_name.png" style="width: 153px;	height: 32px; object-fit: cover;">
+		
+		<!-- NAVIGATION MENU -->
+		<ul class="nav-links">
+	
+		  <!-- USING CHECKBOX HACK -->
+		  
+		  <input type="checkbox" id="checkbox_toggle" />
+		  <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+	
+		  <!-- NAVIGATION MENUS -->
+		  <div class="menu">
+	
+			<li><a href="/">signout</a></li>
+
+	
+	
+			  <!-- DROPDOWN MENU -->
+			  <ul class="dropdown">
+				<li><a href="/">Dropdown 1 </a></li>
+
+			  </ul>
+	
+
+
+		  </div>
+		</ul>
+	  </nav>
+
+    {% block content %}
+    {% endblock %}
+
+	  
+	<div id="popup1" class="overlay">
+    <div class="popup">
+ 
+        <a class="close" href="#">&times;</a>            
+            <!-- Change the form action to /post/add -->
+            <form action="/post/add" method="POST" enctype="multipart/form-data">
+                <label for="class_id" class="popup_text">Choose your class</label>
+                <div class="hex-select">
+                    <select id="example" name="class_id" required >
+                        {% for class in classes %}
+                            <option value="{{ class.id }}" {% if class.id == class_id %}selected{% endif %}>{{ class.class_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- ... (rest of your form fields) -->
+				<h1>Upload your image
+					<small>with preview</small>
+				</h1>
+				<div class="avatar-upload">
+					<div class="avatar-edit">
+						<input type="file" id="imageUpload" name="image" accept=".png, .jpg, .jpeg" />
+
+
+
+						<label for="imageUpload"></label>
+					</div>
+					<div class="avatar-preview">
+						<div id="imagePreview" style="background-image: url(https://assets.pokemon.com/assets/cms2/img/watch-pokemon-tv/seasons/season01/season01_ep01_ss01.jpg);">
+						</div>
+					</div>
+				</div>
+                <label for="content" class="popup_text">Write your content</label>
+                <textarea name="content" class="styled-input" required></textarea>
+                <input type="submit" value="Post" class="post_button">
+            </form>
+    </div>
+</div>
+
+
+
+
+	  
+<nav class="mobile-bottom-nav">
+	<div class="mobile-bottom-nav__item mobile-bottom-nav__item--active">
+		<a href="/questify" class="mobile-bottom-nav__item-content">
+
+			<i  class="material-icons">home</i>
+			one
+		</a>		
+	</div>
+	<div class="mobile-bottom-nav__item">		
+		<a href="/chat" class="mobile-bottom-nav__item-content">
+			<i class="material-icons">mail</i>
+			two
+		</a>
+	</div>
+	<div class="mobile-bottom-nav__item">		
+		<a class="mobile-bottom-nav__item-content open-button button" href="#popup1">
+			
+			<i class="material-icons">add</i>
+			plus
+		</a>
+	</div>
+	<div class="mobile-bottom-nav__item">
+		<div class="mobile-bottom-nav__item-content">
+			<i class="material-icons">person</i>
+			three
+		</div>		
+	</div>
+	
+	<div class="mobile-bottom-nav__item">
+		<a href="/chat" class="mobile-bottom-nav__item-content">
+			<i class="material-icons">phone</i>
+			four
+		</div>		
+	</div>
+</nav> 
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	
+function myFunction() {
+  var x = document.getElementById("myLinks");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+var navItems = document.querySelectorAll(".mobile-bottom-nav__item");
+navItems.forEach(function(e, i) {
+	e.addEventListener("click", function(e) {
+		navItems.forEach(function(e2, i2) {
+			e2.classList.remove("mobile-bottom-nav__item--active");
+		})
+		this.classList.add("mobile-bottom-nav__item--active");
+	});
+});
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageUpload").change(function() {
+    readURL(this);
+});
+</script>
+
+</body>
+</html>
+
+        
+
